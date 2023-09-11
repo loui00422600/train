@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+<style>
+    .main {
+        width: 1500px;
+        height: 1050px;
+        margin: auto;
+        background-color: rgb(185, 183, 183);
+    }
+
+    .main>div.head {
+        height: 150px;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .head>div:nth-child(1) {
+        width: 20%;
+        height: 100%;
+        display: flex;
+    }
+
+    .head>div:nth-child(1)>img {
+        width: 70%;
+        height: 90%;
+        margin: auto;
+    }
+
+    .head>div:nth-child(3) {
+        width: 25%;
+        height: 100%;
+    }
+
+    .center {
+        height: 900px;
+    }
+
+    .login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        flex-direction: column;
+
+    }
+
+    .login2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+
+
+
+    .login2>div:nth-child(1)>input {
+        margin-bottom: 10px;
+        margin-top: 10px;
+
+        width: 200px;
+    }
+
+    .login2>div:nth-child(2) {
+        margin-left: 10px;
+    }
+
+
+    .login2>div>button {
+        width: 70px;
+        height: 80px;
+        border-radius: 5px;
+    }
+
+    .login2>div>button:hover {
+        filter: brightness(80%);
+    }
+
+    .creat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .creat>button:hover {
+        filter: brightness(80%);
+    }
+
+    .t_modal {
+        width: 1500px;
+        height: 950px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        position: absolute;
+    }
+
+    .t_modal1 {
+        width: 1500px;
+        height: 950px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        position: absolute;
+    }
+
+    .t_modal2 {
+        width: 1500px;
+        height: 950px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        position: absolute;
+    }
+
+    .createmodal {
+        width: 30%;
+        height: 70%;
+        position: absolute;
+        background-color: wheat;
+        border-radius: 8px;
+    }
+
+    .createmodal1 {
+        width: 30%;
+        height: 70%;
+        position: absolute;
+        background-color: aquamarine;
+        border-radius: 8px;
+    }
+
+    .createmodal2 {
+        width: 30%;
+        height: 70%;
+        position: absolute;
+        background-color: rgba(213, 207, 207, 0.9);
+        border-radius: 8px;
+
+    }
+
+    .close {
+        height: 5%;
+        display: flex;
+        justify-content: end;
+    }
+
+    .close>img {
+        height: 100%;
+    }
+
+    .user {
+        height: 70%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+    }
+
+    .usersub {
+        justify-content: space-around;
+
+    }
+
+    .userbtn {
+        height: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .userbtn>button {
+        width: 200px;
+        height: 50px;
+        border-radius: 10px;
+    }
+
+    .userbtn>button:hover {
+        filter: brightness(80%);
+    }
+
+
+    .black_wall {
+        position: absolute;
+        width: 100%;
+        height: 1050px;
+        background-color: #00000055;
+    }
+
+    .d_none {
+        display: none;
+    }
+
+    #logout:hover {
+        filter: brightness(80%);
+    }
+
+    #ticketing {
+        margin-left: 30px;
+    }
+
+    #ticketing:hover {
+        filter: brightness(80%);
+    }
+
+    @keyframes pagein {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+
+        }
+    }
+
+    .inner {
+        animation: pagein 1s forwards;
+    }
+
+    .start {
+        position: relative;
+        display: inline-block;
+    }
+
+    .start>button {
+        width: 100px;
+        height: 40px;
+        font-size: 15px;
+        background-color: azure;
+        color: black;
+    }
+
+    #drop-content {
+        width: 200px;
+        position: absolute;
+        z-index: 1;
+        height: 200px;
+        display: flex;
+
+        overflow-y: scroll;
+    }
+
+    #drop-content a {
+        display: block;
+        font-size: 20px;
+        background-color: #dfdfdf;
+        color: black;
+        text-decoration: none;
+        padding: 10px 36px;
+        margin: 2px 0px 0px 0px;
+    }
+
+    #drop-content a:hover {
+        filter: brightness(80%);
+        cursor: pointer;
+    }
+
+
+    .end {
+        position: relative;
+        display: inline-block;
+    }
+
+    .end>button {
+        width: 100px;
+        height: 40px;
+        font-size: 15px;
+        background-color: azure;
+        color: black;
+    }
+
+    #drop-content1 {
+        width: 200px;
+        position: absolute;
+        z-index: 1;
+        height: 200px;
+        display: flex;
+
+
+        overflow-y: scroll;
+    }
+
+    #drop-content1 a {
+        display: block;
+        font-size: 20px;
+        background-color: #dfdfdf;
+        color: black;
+        text-decoration: none;
+        padding: 10px 36px;
+        margin: 2px 0px 0px 0px;
+    }
+
+    #drop-content1 a:hover {
+        filter: brightness(80%);
+        cursor: pointer;
+    }
+
+
+    .citychoice {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .citychoice>button {
+        border-radius: 10px;
+    }
+
+    .traintype>input {
+        margin-right: 20px;
+
+    }
+
+    #list>a:hover {
+        cursor: pointer;
+        filter: brightness(70%);
+    }
+
+    /* .backcolor{
+        filter: brightness(70%);
+    } */
+</style>
+
+<body>
+    <!-- <div class="black_wall"></div> -->
+    <div class="main">
+
+
+        <div class="t_modal d_none">
+            <div class="createmodal">
+                <div class="close">
+                    <img src="../resources/images/closebtn.webp" style="cursor: pointer;" onclick="f_onoff()" alt="">
+                </div>
+                <div style="text-align:center;">
+                    <h1>회원가입</h1>
+                </div>
+                <div class="user">
+                    <div class="usersub"><b>이름</b>
+                        <input type="text" onchange="f_createname()" id="username"
+                            style="width: 300px; border-radius: 8px;" placeholder="이름을 입력해주세요.">
+                        <div id="namecheck" style="font-size: 7px;"></div>
+                    </div>
+                    <div class="usersub"><b>id</b>
+                        <input type="text" onchange="f_createid()" id="userid" style="width: 300px; border-radius: 8px;"
+                            placeholder="6-12자 사이로 입력.">
+                        <div id="idcheck" style="font-size: 7px;"></div>
+                    </div>
+                    <div class="usersub"><b>pw</b>
+                        <input type="password" onchange="f_createpw()" id="userpw"
+                            style="width: 300px; border-radius: 8px;" placeholder="영소문자,숫자 포함 7-14자 사이로 입력.">
+                        <div id="pwcheck" style="font-size: 7px;"></div>
+                    </div>
+                    <div class="usersub"><b>pw확인</b>
+                        <input type="password" onchange="f_createcheck()" id="userpwcheck"
+                            style="width: 300px; border-radius: 8px;" placeholder="위와 같이 입력해주세요.">
+                        <div id="pwchecking" style="font-size: 7px;"></div>
+                    </div>
+                    <div class="usersub"><b>이메일</b>
+                        <input type="text" onchange="f_createemail()" id="useremail"
+                            style="width: 300px; border-radius: 8px;" placeholder="이메일을 입력해주세요.">
+                        <div id="emailcheck" style="font-size: 7px;"></div>
+                    </div>
+                </div>
+                <div class="userbtn">
+                    <button onclick="f_join()">회원가입</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="t_modal1 d_none">
+            <div style="background-color: rgba(179, 234, 238, 0.915); border:5px solid rgb(90, 205, 213);"
+                class="createmodal1">
+                <div class="close">
+                    <img src="../resources/images/closebtn.webp" style="cursor: pointer;" onclick="f_onoff1()" alt="">
+                </div>
+                <div style="text-align:center;">
+                    <h2>예 매</h2>
+                </div>
+                <div class="ticketing">
+                    <div class="citychoice">
+                        <div class="start">
+                            <button id="startname" style="border-radius: 10px;" onclick="f_drop()">출 발</button>
+                            <div style="display: none;" id="drop-content">
+                                <div>
+                                    <input id='startsearch' style='width:65%' type='text'>
+                                    <button onclick='f_areasearch()' style='width:30%'>검색</button>
+                                </div>
+                                <div id="drop-area"></div>
+                            </div>
+                        </div>
+                        <div class="end">
+                            <button id="endname" style="border-radius: 10px;" onclick="f_drop1()">도 착</button>
+                            <div style="display: none;" id="drop-content1">
+                                <div>
+                                    <input id='endsearch' style='width:65%' type='text'>
+                                    <button onclick='f_areasearch1()' style='width:30%'>검색</button>
+                                </div>
+                                <div id="drop-area1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%;height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <label for="date">날짜를 선택하세요:
+                            <input type="date" id="date" min="2023-09-05" max="2023-10-10" value="2023-09-10">
+                        </label>
+                    </div>
+                    <div style="width: 100%;height: 50px; display: flex; align-items: center; justify-content: center;"
+                        class="traintype">
+                        전체<input type="radio" name="t_type" value="all" checked>
+                        무궁화<input type="radio" name="t_type" value="flower">
+                        새마을<input type="radio" name="t_type" value="new">
+                        KTX<input type="radio" name="t_type" value="ktx">
+                    </div>
+                    <div style="width: 100%;height: 50px; display: flex; align-items: center; justify-content: center;"
+                        class="searchbtn">
+                        <button style="width: 80px; height: 50px; border-radius: 5px;" onclick="f_timecheck()">조
+                            회</button>
+                    </div>
+                    <div style="width:100%; height: 400px; display: flex; align-items: center; justify-content: center;"
+                        class="ticketingtime">
+                        <div id="divlist" style="width:90%; height: 90%; background-color: white; overflow-y: scroll;">
+                            <ul id="list"></ul>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+                <div class="userbtn">
+                </div>
+            </div>
+        </div>
+
+        <div class="t_modal2 d_none">
+            <div class="createmodal2">
+                <div class="close">
+                    <img src="../resources/images/closebtn.webp" style="cursor: pointer;" onclick="f_onoff2()" alt="">
+                </div>
+                <div style="height: 10%; text-align: center; padding-top: 20px;">
+                    <h2>예매 현황</h2>
+                </div>
+                <div
+                    style="height: 80%; text-align: center; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 90%; height: 90%; background-color: whitesmoke; overflow-y: scroll;">
+                        <ul id="mylist"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="head">
+            <div class="logo">
+                <img src="../resources/images/trainlogo-removebg-preview.png" alt="">
+            </div>
+            <div class="t_title"
+                style="width: 70%; text-align: center; display: flex; align-items: center; justify-content: center;">
+                <h1>기 차 예 매</h1>
+            </div>
+            <div class="login">
+                <div class="login2">
+                    <div>
+                        ID&nbsp;&nbsp;<input id="loginid" type="text"><br>
+                        PW<input id="loginpw" type="password">
+                    </div>
+                    <div>
+                        <button style="font-size: 15px; font-weight: bolder;" onclick="f_login()">로그인</button>
+                    </div>
+                </div>
+                <div class="creat">
+                    <button
+                        style="font-weight: bolder; background-color: cornflowerblue; border-radius:10px ; width: 200px;height: 40px;"
+                        onclick="f_onoff()">회 원 가 입</button>
+                </div>
+                <div class="userlog d_none"></div>
+            </div>
+        </div>
+        <div class="center backcolor">
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="10000">
+                        <img src="../resources/images/trainback3.jpg" style="width:100%; height: 900px;" class=""
+                            alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="../resources/images/trainback2.jpg"
+                            style="width:100%;  height: 900px; z-index: 50; cursor: pointer;" class=""
+                            onclick="f_onoff1()" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const v_creatname = document.getElementById("username");
+        const v_creatid = document.getElementById("userid");
+        const v_creatpw = document.getElementById("userpw");
+        const v_creatpwcheck = document.getElementById("userpwcheck");
+        const v_createmail = document.getElementById("useremail");
+        const v_idcheck = document.getElementById("idcheck");
+        const v_pwcheck = document.getElementById("pwcheck");
+        const v_namecheck = document.getElementById("namecheck");
+        const v_pwchecking = document.getElementById("pwchecking");
+        const v_emailcheck = document.getElementById("emailcheck");
+        const v_modal1 = document.querySelector(".t_modal1");
+        const v_modal = document.querySelector(".t_modal");
+        const v_modal2 = document.querySelector(".t_modal2");
+        const v_loginid = document.querySelector("#loginid");
+        const v_loginpw = document.querySelector("#loginpw");
+        const v_creatbtn = document.querySelector(".creat");
+        const v_login2 = document.querySelector(".login2");
+        const v_trainbtn = document.getElementsByName("t_type");
+
+        let v_traincheck;
+        let t_train = JSON.parse(localStorage.getItem("train"));
+
+        const dateControl = document.querySelector('input[type="date"]');
+        function f_time() {
+            let now = new Date();
+
+            if (now.getMonth() < 9 && now.getDate() < 10) {
+                var str = now.getFullYear() + '-0' + (now.getMonth() + 1) + '-0' + now.getDate();
+            } else if (now.getMonth() < 9 && now.getDate() > 10) {
+                var str = now.getFullYear() + '-0' + (now.getMonth() + 1) + '-' + now.getDate();
+            } else if (now.getMonth() > 9 && now.getDate() > 10) {
+                var str = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+            }
+
+            let currentMonth = now.getMonth() + 1;
+            let currentDate = now.getDate();
+
+            let newDate = currentDate + 6;
+            let newMonth = currentMonth;
+
+            if (newDate > 30) {
+                newDate -= 30;
+                newMonth += 1;
+            }
+
+            let str1 =
+                now.getFullYear() +
+                '-' +
+                (newMonth < 10 ? '0' : '') + newMonth +
+                '-' +
+                (newDate < 10 ? '0' : '') + newDate;
+
+
+            dateControl.value = str;
+            dateControl.min = str;
+            dateControl.max = str1;
+        }
+        f_time();
+
+
+
+
+
+        let onoff = false;
+        let onoff1 = false;
+        let onoff2 = false;
+        function f_onoff() {
+            if (!onoff) {
+                v_modal.classList.remove("d_none");
+                v_modal.classList.add("inner");
+                onoff = true;
+                f_reset();
+            } else {
+                v_modal.classList.remove("inner");
+                v_modal.classList.add("d_none");
+                onoff = false;
+            }
+        }
+
+        function f_onoff1() {
+            if (sessionStorage.getItem("LoginUser") != null) {
+                if (!onoff1) {
+                    v_modal1.classList.remove("d_none");
+                    v_modal1.classList.add("inner");
+                    onoff1 = true;
+                    f_reset1();
+                } else {
+                    v_modal1.classList.remove("inner");
+                    v_modal1.classList.add("d_none");
+                    onoff1 = false;
+                }
+            } else {
+                alert("로그인을 해주세요.");
+            }
+        }
+
+        function f_onoff2() {
+            if (sessionStorage.getItem("LoginUser") != null) {
+                if (!onoff2) {
+                    v_modal2.classList.remove("d_none");
+                    v_modal2.classList.add("inner");
+                    onoff2 = true;
+
+                } else {
+                    v_modal2.classList.remove("inner");
+                    v_modal2.classList.add("d_none");
+                    onoff2 = false;
+                }
+            } else {
+                alert("로그인이 되어 있지 않습니다.");
+            }
+        }
+
+
+        function f_createname() {
+            if (v_creatname.value != "") {
+                v_creatname.style.boxShadow = "0px 0px 2px 2px skyblue"
+                v_namecheck.style.color = "skyblue"
+                v_namecheck.innerHTML = "이름이 입력되었습니다."
+            } else {
+                v_creatname.style.boxShadow = "0px 0px 2px 2px red"
+                v_namecheck.style.color = "red"
+                v_namecheck.innerHTML = "이름을 입력해주세요."
+            }
+
+        }
+
+        function f_createid() {
+            let regex = /^[a-zA-Z0-9]{6,12}$/;
+            let v_result = regex.test(v_creatid.value);
+            if (!v_result) {
+                v_creatid.style.boxShadow = "0px 0px 2px 2px red"
+                v_idcheck.style.color = "red"
+                v_idcheck.innerHTML = "형식에 맞지 않는 id입니다."
+            }
+            else {
+                v_creatid.style.boxShadow = "0px 0px 2px 2px skyblue"
+                v_idcheck.style.color = "skyblue"
+                v_idcheck.innerHTML = "사용가능한 id입니다."
+            }
+            f_sameid();
+
+        }
+
+        function f_createpw() {
+            let regex = /^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9~!@#$%^&*)(-=]{7,14}$/
+            let v_result = regex.test(v_creatpw.value);
+            if (!v_result) {
+                v_creatpw.style.boxShadow = "0px 0px 2px 2px red"
+                v_pwcheck.style.color = "red"
+                v_pwcheck.innerHTML = "형식에 맞지 않는 password입니다."
+            } else {
+                v_creatpw.style.boxShadow = "0px 0px 2px 2px skyblue"
+                v_pwcheck.style.color = "skyblue"
+                v_pwcheck.innerHTML = "사용가능한 password입니다."
+            }
+        }
+
+        function f_createcheck() {
+            if (v_creatpwcheck.value != v_creatpw.value || v_pwcheck.style.color == "red") {
+                v_creatpwcheck.style.boxShadow = "0px 0px 2px 2px red"
+                v_pwchecking.style.color = "red"
+                v_pwchecking.innerHTML = "패스워드를 다시 입력해주세요."
+            } else {
+                v_creatpwcheck.style.boxShadow = "0px 0px 2px 2px skyblue"
+                v_pwchecking.style.color = "skyblue"
+                v_pwchecking.innerHTML = "일치합니다."
+            }
+        }
+
+        function f_createemail() {
+            let regex = /^[a-zA-Z0-9]+[@][a-z]+[.][a-z]+$/;
+            let v_result = regex.test(v_createmail.value);
+            if (!v_result) {
+                v_createmail.style.boxShadow = "0px 0px 2px 2px red"
+                v_emailcheck.style.color = "red"
+                v_emailcheck.innerHTML = "형식에 맞지 않는 email입니다."
+            } else {
+                v_createmail.style.boxShadow = "0px 0px 2px 2px skyblue"
+                v_emailcheck.style.color = "skyblue"
+                v_emailcheck.innerHTML = "사용 가능한 email입니다."
+            }
+            f_sameemail();
+        }
+
+        function f_join() {
+            if (v_namecheck.style.color == "skyblue"
+                && v_idcheck.style.color == "skyblue"
+                && v_pwcheck.style.color == "skyblue"
+                && v_pwchecking.style.color == "skyblue"
+                && v_emailcheck.style.color == "skyblue") {
+
+                let v_userArray;
+                let v_user = {};
+                if (localStorage.getItem("userDB") == null) {
+                    v_userArray = [];
+                } else {
+                    v_userArray = JSON.parse(localStorage.getItem("userDB"));
+                }
+
+                v_user["name"] = v_creatname.value;
+                v_user["id"] = v_creatid.value;
+                v_user["password"] = v_creatpw.value;
+                v_user["email"] = v_createmail.value;
+                v_userArray.push(v_user);
+                console.log(v_userArray);
+                localStorage.setItem("userDB", JSON.stringify(v_userArray));
+                v_modal.classList.add("d_none");
+                onoff = false;
+                alert("회원가입이 완료되었습니다.")
+                location.reload();
+            } else {
+                alert("정보가 잘못되었습니다. 다시 확인해주세요.")
+            }
+        }
+        let v_userDB = JSON.parse(localStorage.getItem("userDB"));
+
+        function f_sameid() {
+            let v_userDB = JSON.parse(localStorage.getItem("userDB"));
+            for (let i = 0; i < v_userDB.length; i++) {
+                if (v_userDB[i]["id"] == v_creatid.value) {
+                    v_creatid.style.boxShadow = "0px 0px 2px 2px red"
+                    v_idcheck.style.color = "red"
+                    v_idcheck.innerHTML = "중복되는 id입니다.";
+                    break;
+                }
+            }
+        }
+
+        function f_sameemail() {
+            let v_userDB = JSON.parse(localStorage.getItem("userDB"));
+            for (let i = 0; i < v_userDB.length; i++) {
+                if (v_userDB[i]["email"] == v_createmail.value) {
+                    v_createmail.style.boxShadow = "0px 0px 2px 2px red"
+                    v_emailcheck.style.color = "red"
+                    v_emailcheck.innerHTML = "중복되는 email입니다.";
+                    break;
+                }
+            }
+        }
+
+        function f_reset() {
+            v_creatid.value = "";
+            v_creatpw.value = "";
+            v_creatpwcheck.value = "";
+            v_createmail.value = "";
+            v_creatname.value = "";
+            v_creatname.style.boxShadow = ""
+            v_namecheck.style.color = ""
+            v_namecheck.innerHTML = ""
+            v_creatid.style.boxShadow = ""
+            v_idcheck.style.color = ""
+            v_idcheck.innerHTML = ""
+            v_creatpw.style.boxShadow = ""
+            v_pwcheck.style.color = ""
+            v_pwcheck.innerHTML = ""
+            v_creatpwcheck.style.boxShadow = ""
+            v_pwchecking.style.color = ""
+            v_pwchecking.innerHTML = ""
+            v_createmail.style.boxShadow = ""
+            v_emailcheck.style.color = ""
+            v_emailcheck.innerHTML = ""
+        }
+
+        function f_reset1() {
+            const v_list = document.querySelector("#list");
+            v_list.innerHTML = "";
+            v_startname.innerHTML = "출 발";
+            v_endname.innerHTML = "도 착";
+            v_trainbtn[0].checked;
+
+        }
+
+
+        const v_login = document.querySelector(".login");
+        const v_userlog = document.querySelector(".userlog");
+        let loginch = false;
+        function f_login() {
+            for (let i = 0; i < v_userDB.length; i++) {
+                if (v_userDB[i]["id"] == v_loginid.value
+                    && v_userDB[i]["password"] == v_loginpw.value) {
+                    sessionStorage.setItem("LoginUser", JSON.stringify(v_userDB[i]));
+                    v_creatbtn.classList.add("d_none");
+                    v_login2.classList.add("d_none");
+                    v_userlog.classList.remove("d_none");
+                    v_userlog.innerHTML = "<div>" + v_userDB[i]["name"] + "님께서 로그인 하셨습니다.</div>";
+                    v_userlog.innerHTML += "<button id='logout' onclick='f_logout()'>로그아웃</button>";
+                    v_userlog.innerHTML += "<button id='ticketing' style='margin-right:30px;' onclick='f_ticketingch()'>예매현황</button>"
+                    loginch = true;
+                }
+            }
+            if (!loginch) {
+                alert("다시입력해주세요.");
+            }
+        }
+
+        function f_logout() {
+            if (loginch) {
+                loginch = false;
+                sessionStorage.removeItem("LoginUser");
+                location.reload();
+            }
+        }
+
+        let v_startname = document.querySelector("#startname");
+        let v_endname = document.querySelector("#endname");
+        let v_drop1 = document.querySelector("#drop-content");
+        let v_drop2 = document.querySelector("#drop-content1");
+        let v_droparea = document.querySelector("#drop-area");
+        let v_droparea1 = document.querySelector("#drop-area1");
+        let v_allarea = JSON.parse(localStorage.getItem("allarea"));
+        let v_dropsearch = document.querySelector("#droparea");
+
+
+        function f_drop() {
+            for (let i = 0; i < v_allarea.length; i++) {
+                v_droparea.innerHTML += "<a onclick='f_areaclick()'>" + v_allarea[i]["nodename"] + "</a>";
+            }
+            if (v_drop1.style.display === "none") {
+                v_drop1.style.display = "block";
+            } else {
+                v_drop1.style.display = "none";
+            }
+        }
+
+
+        function f_dropsearch() {
+            for (let i = 0; i < v_allarea.length; i++) {
+                v_dropsearch.innerHTML += "<a onclick='f_areaclick()'>" + v_allarea[i]["nodename"] + "</a>";
+            }
+            if (v_drop1.style.display === "none") {
+                v_dropsearch.style.display = "block";
+            } else {
+                v_dropsearch.style.display = "none";
+            }
+        }
+
+        function f_drop1() {
+            for (let i = 0; i < v_allarea.length; i++) {
+                // let v_a = document.createElement("a");
+                v_droparea1.innerHTML += "<a onclick='f_areaclick1()'>" + v_allarea[i]["nodename"] + "</a>";
+                // v_drop1.appendChild(v_a)
+            }
+            if (v_drop2.style.display === "none") {
+                v_drop2.style.display = "block";
+            } else {
+                v_drop2.style.display = "none";
+            }
+        }
+
+        let startcode;
+        let endcode;
+
+        function f_areaclick() {
+            startcode = "";
+            v_startname.innerHTML = event.target.innerHTML;
+            for (let i = 0; i < v_allarea.length; i++) {
+                if (v_startname.innerHTML == v_allarea[i]["nodename"]) {
+                    startcode = v_allarea[i]["nodeid"];
+                }
+            }
+            console.log(startcode);
+
+
+            if (v_drop1.style.display === "none") {
+                v_drop1.style.display = "block";
+            } else {
+                v_drop1.style.display = "none";
+            }
+        }
+        function f_areaclick1() {
+            v_endname.innerHTML = event.target.innerHTML;
+            endcode = "";
+
+            v_endname.innerHTML = event.target.innerHTML;
+            for (let i = 0; i < v_allarea.length; i++) {
+                if (v_endname.innerHTML == v_allarea[i]["nodename"]) {
+                    endcode = v_allarea[i]["nodeid"];
+                }
+            }
+            console.log(endcode);
+
+            if (v_drop2.style.display === "none") {
+                v_drop2.style.display = "block";
+            } else {
+                v_drop2.style.display = "none";
+            }
+        }
+
+        let v_startsearch = document.querySelector("#startsearch");
+        function f_areasearch() {
+            v_droparea.innerHTML = "";
+            console.log(v_startsearch.value);
+            for (let i = 0; i < v_allarea.length; i++) {
+                if (v_allarea[i]["nodename"].indexOf(v_startsearch.value) != -1) {
+                    v_droparea.innerHTML += "<a onclick='f_areaclick()'>" + v_allarea[i]["nodename"] + "</a>";
+                }
+            }
+        }
+
+        let v_endsearch = document.querySelector("#endsearch");
+        function f_areasearch1() {
+            v_droparea1.innerHTML = "";
+            console.log(v_endsearch.value);
+            for (let i = 0; i < v_allarea.length; i++) {
+                if (v_allarea[i]["nodename"].indexOf(v_endsearch.value) != -1) {
+                    v_droparea1.innerHTML += "<a onclick='f_areaclick1()'>" + v_allarea[i]["nodename"] + "</a>";
+                }
+            }
+        }
+
+        let t_type = document.getElementsByName("t_type");
+
+        function f_timecheck() {
+            $('#list > li').remove();
+            var a = dateControl.value.split('-');
+            var b = a[0] + a[1] + a[2];
+
+            if (v_trainbtn[1].checked) {
+                v_traincheck = t_train[2]["vehiclekndid"];
+            } else if (v_trainbtn[2].checked) {
+                v_traincheck = t_train[7]["vehiclekndid"];
+            } else if (v_trainbtn[3].checked) {
+                v_traincheck = t_train[0]["vehiclekndid"];
+            } else {
+                v_traincheck = "";
+            }
+            console.log(v_traincheck)
+
+            var xhr = new XMLHttpRequest();
+            var url = 'http://apis.data.go.kr/1613000/TrainInfoService/getStrtpntAlocFndTrainInfo'; /*URL*/
+            var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'EiBpG0IF%2F5iWabEn0sVxpe1pxanblUPYUv4n9u66FIyB7XS4VXT43NZ%2BwC2KXZt6BW%2FdxrjLlbNvWhYmlxlLyQ%3D%3D'; /*Service Key*/
+            queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+            queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
+            queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
+            queryParams += '&' + encodeURIComponent('depPlaceId') + '=' + encodeURIComponent(startcode); /**/
+            queryParams += '&' + encodeURIComponent('arrPlaceId') + '=' + encodeURIComponent(endcode); /**/
+            queryParams += '&' + encodeURIComponent('depPlandTime') + '=' + encodeURIComponent(b); /**/
+            queryParams += '&' + encodeURIComponent('trainGradeCode') + '=' + encodeURIComponent(v_traincheck); /**/
+            xhr.open('GET', url + queryParams);
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    let v_json = JSON.parse(this.responseText);
+                    if (v_json["response"]["body"]["items"]["item"] != null) {
+                        for (let i = 0; i < v_json["response"]["body"]["items"]["item"].length; i++) {
+                            var dateString = String(v_json["response"]["body"]["items"]["item"][i]['depplandtime']);
+                            var dateString1 = String(v_json["response"]["body"]["items"]["item"][i]['arrplandtime']);
+                            let year = parseInt(dateString.substring(0, 4));
+                            let month = parseInt(dateString.substring(4, 6));
+                            let day = parseInt(dateString.substring(6, 8));
+                            let hours = parseInt(dateString.substring(8, 10));
+                            let minutes = parseInt(dateString.substring(10, 12));
+                            let year1 = parseInt(dateString1.substring(0, 4));
+                            let month1 = parseInt(dateString1.substring(4, 6));
+                            let day1 = parseInt(dateString1.substring(6, 8));
+                            let hours1 = parseInt(dateString1.substring(8, 10));
+                            let minutes1 = parseInt(dateString1.substring(10, 12));
+
+                            var depplandtime = year + "/" + month + "/" + day + " " + hours + "시" + minutes + "분";
+                            var arrplandtime = year1 + "/" + month1 + "/" + day1 + " " + hours1 + "시" + minutes1 + "분";
+                            $('#list').append('<li onclick="f_finish()">출발역: ' + v_json["response"]["body"]["items"]["item"][i]['depplacename']
+                                + '<br>도착역: ' + v_json["response"]["body"]["items"]["item"][i]['arrplacename']
+                                + '<br>출발시간: ' + depplandtime
+                                + '<br>도착시간: ' + arrplandtime
+                                + '<br>기차명: ' + v_json["response"]["body"]["items"]["item"][i]['traingradename']
+                                + '<hr></li>');
+                        }
+                    } else {
+                        $('#list').append("<li>조회 결과 없음</li>");
+                    }
+                }
+            };
+            xhr.send('');
+        }
+
+        let v_finishArray;
+        function f_finish() {
+            v_finish = {};
+
+            console.log(event.target.innerHTML);
+            var a = event.target.innerHTML;
+            var b = a.split('<br>');
+
+            if (localStorage.getItem('finish') == null) {
+                v_finishArray = [];
+            } else {
+                v_finishArray = JSON.parse(localStorage.getItem('finish'));
+            }
+
+
+            if (localStorage.getItem('finish') == null || JSON.parse(localStorage.getItem('finish')) == 0) {
+                v_finish['num'] = 0;
+            } else {
+                v_finish['num'] = JSON.parse(localStorage.getItem('finish'))[JSON.parse(localStorage.getItem('finish')).length - 1]['num'] + 1;
+            }
+            v_finish['id'] = JSON.parse(sessionStorage.getItem('LoginUser'))['id'];
+            v_finish['list'] = b;
+            v_finishArray.push(v_finish);
+            if (!confirm("예매를 하시겠습니까?")) {
+                alert("취소 되었습니다.");
+            } else {
+                localStorage.setItem("finish", JSON.stringify(v_finishArray));
+                v_modal1.classList.remove("inner");
+                v_modal1.classList.add("d_none");
+                onoff1 = false;
+                alert("예매되었습니다.");
+            }
+
+
+        }
+
+        function f_ticketingch() {
+            let v_list2 = document.querySelector('#mylist');
+            v_list2.innerHTML = "";
+            f_onoff2();
+            for (let i = 0; i < localStorage.getItem('finish').length; i++) {
+                if (JSON.parse(localStorage.getItem('finish'))[i]['id'] == JSON.parse(sessionStorage.getItem('LoginUser'))['id']) {
+                    $('#mylist').append('<li onclick="f_delect()">' + JSON.parse(localStorage.getItem('finish'))[i]['num']
+                        + '<br>' + JSON.parse(localStorage.getItem('finish'))[i]['list'][0]
+                        + '<br>' + JSON.parse(localStorage.getItem('finish'))[i]['list'][1]
+                        + '<br>' + JSON.parse(localStorage.getItem('finish'))[i]['list'][2]
+                        + '<br>' + JSON.parse(localStorage.getItem('finish'))[i]['list'][3]
+                        + '<br>' + JSON.parse(localStorage.getItem('finish'))[i]['list'][4]
+                        + '</li>');
+                }
+            }
+        }
+
+        function f_delect() {
+
+            console.log(event.target);
+            if (!confirm("예매취소 하시겠습니까?")) {
+
+            } else {
+                console.log(event.target.innerHTML);
+                var a = event.target.innerHTML;
+                var b = a.split('<br>');
+                let v_delarray = [];
+                var v_finishArray = JSON.parse(localStorage.getItem('finish'));
+                for (let i = 0; i < v_finishArray.length; i++)
+                    if (b[0] != v_finishArray[i]['num']) {
+                        v_delarray.push(v_finishArray[i]);
+                    }
+                localStorage.setItem('finish', JSON.stringify(v_delarray));
+                alert("취소되었습니다.");
+            }
+            f_onoff2();
+            f_ticketingch();
+        }
+
+
+    </script>
+</body>
+
+</html>

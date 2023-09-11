@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="f_click()">지역 호출</button>
+    <button onclick="f_click1()">기차 호출</button>
+    <!-- <button onclick="f_click2()">각 지역 호출</button> -->
+    <button onclick="f_click3()">전지역 호출</button>
+
+    <script>
+        /* Javascript 샘플 코드 */
+        function f_click() {
+
+            f_area();
+        }
+        function f_click1() {
+
+            f_train()
+        }
+
+        function f_click2() {
+            let num=0;
+
+            f_city(num);
+        }
+
+        function f_click3() {
+            let num=0;
+
+            f_allcity(num);
+        }
+
+
+
+        function f_area(){
+            var xhr = new XMLHttpRequest();
+        var url = 'http://apis.data.go.kr/1613000/TrainInfoService/getCtyCodeList'; /*URL*/
+        var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'EiBpG0IF%2F5iWabEn0sVxpe1pxanblUPYUv4n9u66FIyB7XS4VXT43NZ%2BwC2KXZt6BW%2FdxrjLlbNvWhYmlxlLyQ%3D%3D'; /*Service Key*/
+        queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
+        xhr.open('GET', url + queryParams);
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                let v_json = JSON.parse(this.responseText);
+                console.log(v_json);
+                localStorage.setItem("area",JSON.stringify(v_json["response"]["body"]["items"]["item"]));
+            }
+        };
+
+
+        xhr.send('');
+        }
+
+        function f_train() {
+            var xhr = new XMLHttpRequest();
+            let num=0;
+
+            var url = 'http://apis.data.go.kr/1613000/TrainInfoService/getVhcleKndList'; /*URL*/
+            var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'EiBpG0IF%2F5iWabEn0sVxpe1pxanblUPYUv4n9u66FIyB7XS4VXT43NZ%2BwC2KXZt6BW%2FdxrjLlbNvWhYmlxlLyQ%3D%3D'; /*Service Key*/
+            queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
+            xhr.open('GET', url + queryParams);
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    let v_json = JSON.parse(this.responseText);
+                    console.log(v_json);
+                    localStorage.setItem("train", JSON.stringify(v_json["response"]["body"]["items"]["item"]));
+                }
+                
+            };
+         
+            xhr.send('');
+        }
+
+
+        function f_city(f_num) {
+            var xhr = new XMLHttpRequest();
+            num=0;
+            let v_json2 = {};
+            let cityarray = [];
+
+            var url = 'http://apis.data.go.kr/1613000/TrainInfoService/getCtyAcctoTrainSttnList'; /*URL*/
+            var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'EiBpG0IF%2F5iWabEn0sVxpe1pxanblUPYUv4n9u66FIyB7XS4VXT43NZ%2BwC2KXZt6BW%2FdxrjLlbNvWhYmlxlLyQ%3D%3D'; /*Service Key*/
+            queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+            queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
+            queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
+            queryParams += '&' + encodeURIComponent('cityCode') + '=' + encodeURIComponent(JSON.parse(localStorage.getItem("area"))[f_num]["citycode"]); /**/
+            xhr.open('GET', url + queryParams);
+            xhr.onreadystatechange = function () {
+                
+                if (this.readyState == 4) {
+                    let v_json = JSON.parse(this.responseText);
+                    console.log(v_json["response"]["body"]["items"]["item"].length);
+                    console.log(v_json);
+                    console.log(f_num);
+
+                    if (v_json["response"]["body"]["items"]["item"].length > 0&& f_num <= 15) {
+
+                        let v_items = v_json["response"]["body"]["items"]["item"];
+
+                        for (let i = 0; i < v_items.length; i++) {
+                            localStorage.setItem(JSON.parse(localStorage.getItem("area"))[f_num]["cityname"],JSON.stringify(v_items));
+                        }
+                        v_items="";
+
+                        f_num++;
+                        f_city(f_num);
+                        
+                    } else {
+                    //     // data가 0개 오는 구간
+                        document.write("데이터를 전부 불러왔습니다.");
+                    }
+                };
+                
+
+            }
+            xhr.send('');
+        }
+
+        let v_cityArray=[];
+
+        function f_allcity(f_num) {
+            var xhr = new XMLHttpRequest();
+            /* Javascript 샘플 코드 */
+            var url = 'http://apis.data.go.kr/1613000/TrainInfoService/getCtyAcctoTrainSttnList'; /*URL*/
+            var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + 'EiBpG0IF%2F5iWabEn0sVxpe1pxanblUPYUv4n9u66FIyB7XS4VXT43NZ%2BwC2KXZt6BW%2FdxrjLlbNvWhYmlxlLyQ%3D%3D'; /*Service Key*/
+            queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+            queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
+            queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
+            queryParams += '&' + encodeURIComponent('cityCode') + '=' + encodeURIComponent(JSON.parse(localStorage.getItem("area"))[f_num]["citycode"]); /**/
+            xhr.open('GET', url + queryParams);
+            xhr.onreadystatechange = function () {
+                
+                if (this.readyState == 4) {
+                    let v_json = JSON.parse(this.responseText);
+                    
+                    if (v_json["response"]["body"]["items"]["item"].length > 0 && f_num <= 15) {
+                        let v_items = v_json["response"]["body"]["items"];
+                        console.log(v_items);
+                        for (let i = 0; i < v_items["item"].length; i++) {
+                            v_cityArray.push(v_items["item"][i]);
+                        }
+                        v_items="";
+                        localStorage.setItem("allarea",JSON.stringify(v_cityArray));
+                        f_num++;
+                        f_allcity(f_num);
+                    } else {
+                        document.write("데이터를 전부 불러왔습니다.");
+                    }
+                };
+            }
+            xhr.send('');
+        }
+
+    </script>
+</body>
+
+</html>
